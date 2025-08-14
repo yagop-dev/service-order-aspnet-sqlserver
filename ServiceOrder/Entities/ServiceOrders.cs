@@ -1,6 +1,6 @@
 ﻿namespace ServiceOrder.Entities
 {
-    public class ServiceOrder
+    public class ServiceOrders
     {
         public int Id { get; set; }
         public string Description { get; set; }
