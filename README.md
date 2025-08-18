@@ -55,6 +55,7 @@ Once the application is running, you can access the Swagger UI for API testing a
 https://localhost:{your-port}/swagger
 # Replace `{your-port}` with the actual port used by your ASP.NET Core application.
 
+```
 ---
 
 ## 📍 Roadmap
