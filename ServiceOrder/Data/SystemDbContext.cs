@@ -14,7 +14,7 @@ namespace ServiceOrder.Data
         public DbSet<Technician> Technicians { get; set; }
         public DbSet<ServiceOrders> ServiceOrders { get; set; }
 
-        //Method to configure 
+        //Method to configure the creation of tables and relationships
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Calls base method
