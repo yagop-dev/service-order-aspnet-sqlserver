@@ -27,7 +27,7 @@ namespace ServiceOrder.Controllers
         public async Task<ActionResult<Technician>> GetById(int id)
         {
             var technician = await _db.Technicians.FindAsync(id);
-            return technician is not null ? Ok(technician) : NotFound();
+            return technician != null ? Ok(technician) : NotFound();
         }
 
         [HttpPost]
