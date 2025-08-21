@@ -17,7 +17,6 @@ namespace ServiceOrder.Data
         //Method to configure the creation of tables and relationships
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Calls base method
             base.OnModelCreating(modelBuilder);
 
             //Relationships between entities

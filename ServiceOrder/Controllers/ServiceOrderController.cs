@@ -103,7 +103,7 @@ namespace ServiceOrder.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, [FromBody] ServiceOrderCreateDto dto)
+        public async Task<IActionResult> Update(int id, [FromBody] ServiceOrderUpdateDto dto)
         {
             var so = await _db.ServiceOrders.FindAsync(id);
             if (so == null)
@@ -114,15 +114,33 @@ namespace ServiceOrder.Controllers
             if (dto.TechnicianId.HasValue)
             {
                 var technicianExists = await _db.Technicians.AnyAsync(t => t.Id == dto.TechnicianId.Value);
-                if(!technicianExists)
+                if(technicianExists)
                 {
-                    return BadRequest("Technician " + dto.TechnicianId + " does not exist.");
+                    so.TechnicianId = dto.TechnicianId;
                 }
             }
+            else
+            {
+                so.TechnicianId = so.TechnicianId;
+            }
 
-            so.TechnicianId = dto.TechnicianId;
-            so.Description = dto.Description;
-            so.Status = string.IsNullOrWhiteSpace(dto.Status) ? so.Status : dto.Status;
+            if (dto.Description != "string")
+            {
+                so.Description = !string.IsNullOrWhiteSpace(dto.Description) ? dto.Description : so.Description;
+            }
+            else
+            {
+                so.Description = so.Description;
+            }
+
+            if (dto.Status != "string")
+            {
+                so.Status = !string.IsNullOrWhiteSpace(dto.Status) ? dto.Status : so.Status;
+            }
+            else
+            {
+                so.Status = so.Status;
+            }
 
             await _db.SaveChangesAsync();
             return NoContent();
