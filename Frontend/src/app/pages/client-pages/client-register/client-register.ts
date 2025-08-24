@@ -13,6 +13,6 @@ export class ClientRegister {
   constructor(private router: Router){}
 
   back(){
-    this.router.navigate(['']);
+    this.router.navigate(['client-login']);
   }
 }

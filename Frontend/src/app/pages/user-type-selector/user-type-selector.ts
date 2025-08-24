@@ -13,7 +13,7 @@ export class UserTypeSelector {
   constructor(private router: Router){}
 
   selectClient(){
-    this.router.navigate(['/client-register']);
+    this.router.navigate(['/client-login']);
   }
 
   selectTechnician(){
