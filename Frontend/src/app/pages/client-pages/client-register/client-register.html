@@ -1,0 +1,30 @@
+<main> 
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-box">
+        <h2>REGISTER</h2>
+        <div class="container">
+            <label for="name">Name: </label>
+            <input id="name" formControlName="name" placeholder="Your entire name">
+    
+            <label for="telephone">Telephone: </label>
+            <input id="telephone" formControlName="telephone" placeholder="(000) 11111-2222 / 000111112222">
+    
+            <label for="email">E-mail: </label>
+            <input id="email" formControlName="email" type="email" placeholder="username_email@domain.com">
+        </div>
+
+        <div class="button-box">
+            <button class="select-btn" (click)="back()">Back</button>
+            <button class="select-btn" type="submit">Submit</button>
+            <button class="select-btn" type="reset">Reset</button>
+        </div>
+    </form>
+    @if(errorMsg){
+        <div class="errorMsg">
+            <p>{{errorMsg}}</p>
+        </div>
+    }@else if(successMsg){
+        <div class="successMsg">
+            <p>{{successMsg}}</p>
+        </div>
+    }
+</main>

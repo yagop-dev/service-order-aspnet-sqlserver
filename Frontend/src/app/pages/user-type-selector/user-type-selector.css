@@ -1,0 +1,47 @@
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    background-color: #444D58;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px 5px;
+    border-radius: 10px;
+    width: 500px;
+    height: 300px;
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: flex-start;
+}
+.choose-text{
+    color: #FFFFFF;
+    margin-left: 25%;
+    margin-bottom: 15%;
+}
+.button-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-right: 10px;
+    margin-top: 20px;
+    gap: 20px;
+}
+.select-btn{
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #919fb1;
+    width: 150px;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    background-color: #444D58;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.select-btn:hover{
+    background-color: #343b44;
+}
