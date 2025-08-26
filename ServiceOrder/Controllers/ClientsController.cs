@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.JSInterop.Infrastructure;
 using ServiceOrder.Data;
 using ServiceOrder.DTOs;
 using ServiceOrder.Entities;
@@ -66,9 +67,9 @@ namespace ServiceOrder.Controllers
             }
 
             //Update the permitted fields
-            client.Name = dto.Name;
-            client.Telephone = dto.Telephone;
-            client.Email = dto.Email;
+            client.Name = !string.IsNullOrWhiteSpace(dto.Name) ? dto.Name : client.Name;
+            client.Telephone = !string.IsNullOrWhiteSpace(dto.Telephone) ? dto.Telephone : client.Telephone;
+            client.Email = !string.IsNullOrWhiteSpace(dto.Email) ? dto.Email : client.Email;
 
             //Save the changes to the database
             await _db.SaveChangesAsync();

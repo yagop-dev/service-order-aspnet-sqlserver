@@ -20,12 +20,12 @@ namespace ServiceOrder.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ServiceOrders>>> GetAll([FromQuery] string? status, [FromQuery] int? clientId, [FromQuery] string? clientName, [FromQuery] int? technicianId, [FromQuery] string? technicianName)
+        public async Task<ActionResult<IEnumerable<ServiceOrders>>> GetAll([FromQuery] ServiceOrderStatus? status, [FromQuery] int? clientId, [FromQuery] string? clientName, [FromQuery] int? technicianId, [FromQuery] string? technicianName)
         {
             var query = _db.ServiceOrders.AsNoTracking().Include(so => so.Client).Include(so => so.Technician).AsQueryable();
 
             //Apply filters based on query parameters
-            query = !string.IsNullOrWhiteSpace(status) ? query.Where(so => so.Status == status) : query;
+            query = status.HasValue ? query.Where(so => so.Status == status) : query;
             query = clientId.HasValue ? query.Where(so => so.ClientId == clientId.Value) : query;
             query = !string.IsNullOrWhiteSpace(clientName) ? query.Where(so => so.Client.Name == clientName) : query;
             query = technicianId.HasValue ? query.Where(so => so.TechnicianId == technicianId.Value) : query;
@@ -95,7 +95,7 @@ namespace ServiceOrder.Controllers
                 Title = dto.Title,
                 Description = dto.Description,
                 CreatedDate = DateTime.UtcNow,
-                Status = "Pending"
+                Status = dto.Status ?? ServiceOrderStatus.Pending
             };
             _db.ServiceOrders.Add(so);
             await _db.SaveChangesAsync();
@@ -119,28 +119,8 @@ namespace ServiceOrder.Controllers
                     so.TechnicianId = dto.TechnicianId;
                 }
             }
-            else
-            {
-                so.TechnicianId = so.TechnicianId;
-            }
-
-            if (dto.Description != "string")
-            {
-                so.Description = !string.IsNullOrWhiteSpace(dto.Description) ? dto.Description : so.Description;
-            }
-            else
-            {
-                so.Description = so.Description;
-            }
-
-            if (dto.Status != "string")
-            {
-                so.Status = !string.IsNullOrWhiteSpace(dto.Status) ? dto.Status : so.Status;
-            }
-            else
-            {
-                so.Status = so.Status;
-            }
+            so.Description = !string.IsNullOrWhiteSpace(dto.Description) ? dto.Description : so.Description;
+            so.Status = dto.Status ?? so.Status;
 
             await _db.SaveChangesAsync();
             return NoContent();

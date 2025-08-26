@@ -32,6 +32,13 @@ namespace ServiceOrder.Data
                 .HasForeignKey(so => so.TechnicianId)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            modelBuilder.Entity<ServiceOrders>()
+                .Property(so => so.Status)
+                .HasConversion<string>()
+                .HasMaxLength(20)
+                .HasDefaultValue(ServiceOrderStatus.Pending)
+                .IsRequired();
+
             modelBuilder.Entity<Client>().ToTable("Clients");
             modelBuilder.Entity<Technician>().ToTable("Technicians");
             modelBuilder.Entity<ServiceOrders>().ToTable("ServiceOrders");
