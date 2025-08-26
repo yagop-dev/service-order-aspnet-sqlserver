@@ -1,11 +1,13 @@
-<header>
-    <h1 class="main-title">OS</h1>
-    <div class="btn-div">
-        <button class="top-nav" (click)="profile()">Profile</button>
-        <button class="top-nav" (click)="serviceOrder()">Service Orders</button>
-        <button id="logout" class="top-nav" (click)="logout()">Logout</button>
-    </div>
-</header>
+@if(showHeader){
+    <header>
+        <h1 class="main-title">OS</h1>
+        <div class="btn-div">
+            <button class="top-nav" (click)="profile()">Profile</button>
+            <button class="top-nav" (click)="serviceOrder()">Service Orders</button>
+            <button id="logout" class="top-nav" (click)="logout()">Logout</button>
+        </div>
+    </header>
+}
 <main>
     <router-outlet></router-outlet>
 </main>

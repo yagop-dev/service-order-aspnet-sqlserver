@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './client-serivice-orders.css'
 })
 export class ClientSeriviceOrders {
-  orderName = "Cleaning and preventive maintenance"
-  orderDescription = "Physical cleaning and checking of desktop components."
+  orderName = "Limpeza e manutenção preventiva de notebook"
+  orderDescription = this.orderName + "\nSubstituição de HD por SSD de 480GB em notebook Dell Inspiron."
 }

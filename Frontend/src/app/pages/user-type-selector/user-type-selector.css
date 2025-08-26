@@ -5,8 +5,9 @@ main{
 }
 
 .container{
-    background-color: #7d93b1;
-    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+    background-color: #444D58;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px 5px;
+    border-radius: 10px;
     width: 500px;
     height: 300px;
     margin-top: 10%;
@@ -16,6 +17,7 @@ main{
     align-content: flex-start;
 }
 .choose-text{
+    color: #FFFFFF;
     margin-left: 25%;
     margin-bottom: 15%;
 }
@@ -23,19 +25,23 @@ main{
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-right: 10px;
     margin-top: 20px;
     gap: 20px;
 }
 .select-btn{
     font-family: "Montserrat", sans-serif;
-    padding: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #919fb1;
     width: 150px;
     height: 50px;
-    border: 1px solid black;
-    background-color: #B6C2D3;
+    border: none;
+    border-radius: 5px;
+    background-color: #444D58;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
 .select-btn:hover{
-    background-color: #99AAC2;
+    background-color: #343b44;
 }

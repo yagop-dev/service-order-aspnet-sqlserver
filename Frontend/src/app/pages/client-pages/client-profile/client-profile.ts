@@ -14,10 +14,10 @@ export class ClientProfile implements OnInit{
   email: string = ""
 
   ngOnInit(){
-    const clientData = localStorage.getItem("client");
+    var clientData = localStorage.getItem("client");
     
     if(clientData){
-      const client = JSON.parse(clientData);
+      var client = JSON.parse(clientData);
       this.name = client.name;
       this.telephone = client.telephone;
       this.email = client.email;

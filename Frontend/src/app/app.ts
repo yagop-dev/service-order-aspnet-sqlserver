@@ -1,6 +1,4 @@
-import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { Component, NgModule, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Router } from '@angular/router';
 
@@ -13,11 +11,20 @@ import { Router } from '@angular/router';
 })
 
 export class App {
+  pagesWithoutHeader = ['user-type','client-login', 'client-register', 'technician-register'];
+  showHeader = false;
+
   protected readonly title = signal('Service_Order_Frontend');
-  constructor(private router: Router){}
+
+  constructor(private router: Router){
+    this.router.events.subscribe(() =>{
+      const currentUrl = this.router.routerState.snapshot.url;
+      this.showHeader = !this.pagesWithoutHeader.some(path => currentUrl.startsWith(`/${path}`)) 
+    })
+  }
 
   profile(){
-    this.router.navigate(['client-profile'])
+    this.router.navigate(['client-profile/:id'])
   }
 
   serviceOrder(){
@@ -25,6 +32,7 @@ export class App {
   }
 
   logout(){
+    localStorage.removeItem("client");
     this.router.navigate([''])
   }
 

@@ -13,6 +13,12 @@ export class AuthService{
 
     constructor(private http: HttpClient){}
 
+    register(name:string, telephone:string, email:string): Observable<Client>{
+        return this.http.post<Client>(`${this.apiUrl}/register`,{name,telephone,email})
+    }
+
+    //#region login
+
     login(email: string): Observable<Client>{
         return this.http.post<Client>(`${this.apiUrl}/login`,{email}).pipe(
             tap(client => localStorage.setItem('client', JSON.stringify(client)))
@@ -27,4 +33,6 @@ export class AuthService{
     logout(){
         localStorage.removeItem('client');
     }
+
+    //#endregion
 }
