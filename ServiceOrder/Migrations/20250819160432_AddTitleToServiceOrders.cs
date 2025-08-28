@@ -13,7 +13,7 @@ namespace ServiceOrder.Migrations
             migrationBuilder.AddColumn<string>(
                 name: "Title",
                 table: "ServiceOrders",
-                type: "nvarchar(max)",
+                type: "nv3\t16,94\t34,17\t96024255\r\narchar(max)",
                 nullable: false,
                 defaultValue: "");
         }
