@@ -62,31 +62,25 @@ input{
 
 .errorMsg{
     display: flex;
-    position: absolute;
-    bottom: 35%;
-    left: 50%;
     font-size: 20px;
     font-weight: bold;
-    transform: translateX(-50%);
-    width: 500px;
-    height: 30px;
     justify-content: center;
     align-items: center;
+    margin-top:2%;
+    width: 500px;
+    height: 30px;
     color: red;
 }
 
 .successMsg{
     display: flex;
-    position: absolute;
-    bottom: 35%;
-    left: 50%;
     font-size: 20px;
     font-weight: bold;
-    transform: translateX(-50%);
-    width: 500px;
-    height: 30px;
     justify-content: center;
     align-items: center;
+    margin-top:2%;
+    width: 500px;
+    height: 30px;
     text-align: center;
     color: green;
 }

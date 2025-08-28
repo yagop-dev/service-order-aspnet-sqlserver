@@ -1,0 +1,45 @@
+<main>
+    <div class="so-create-btn">
+        <h1>CREATE ORDER</h1>
+        <form class="container">
+            <div class="select">
+                <label for="department">Department:
+                    <select id="department" name="department">
+                        <option value="">--Select--</option>
+                        <option value="infrastructure">Infrastructure</option>
+                        <option value="microcomputing">Microcomputing</option>
+                        <option value="HR">HR</option>
+                        <option value="juridical">Juridical</option>
+                        <option value="financial">Financial</option>
+                    </select>
+                </label>
+                <label for="type">Type:
+                    <select id="type" name="type">
+                        <option value="">--Select--</option>
+                        <option value="software">Software</option>
+                        <option value="hardware">Hardware</option>
+                        <option value="access">Access</option>
+                        <option value="improvement">improvement</option>
+                        <option value="bug">Bug</option>
+                    </select>
+                </label>
+            </div>
+
+            <label for="order-title">Order title:</label>
+            <input id="order-title" name="order-name">
+            
+            <label for="subject">Subject:</label>
+            <input id="subject" name="subject">
+                        
+            <label for="order-description">Order description:</label>
+            <textarea id="order-description" name="order-description" rows="5"></textarea>
+            
+            <input type="file" id="file-upload" name="file[]" accept="image/*, application/pdf">
+        
+            <div class="button-box">
+                <button class="select-btn" type="submit">Submit</button>
+                <button class="select-btn" type="reset">Reset</button>
+            </div>
+        </form>
+    </div>
+</main>     

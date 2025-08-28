@@ -1,0 +1,13 @@
+<main>    
+    <aside>
+        <div class="container">
+            <button class="order-title">ORDERS</button>
+            <button class="menu-btn" id="new-btn" (click)="createOrder()">+</button>
+        </div>
+        <button class="menu-btn" title="{{orderDescription}}" (click)="openOrder()">{{orderName}}</button>
+        <button class="menu-btn" title="{{orderDescription}}">{{orderName}}</button>
+        <button class="menu-btn" title="{{orderDescription}}">{{orderName}}</button>
+        <button class="menu-btn" title="{{orderDescription}}">{{orderName}}</button>
+    </aside>
+    <router-outlet></router-outlet>
+</main>
