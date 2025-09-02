@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServiceOrder.Entities;
+using ServiceOrder.Entities.ServiceOrder;
 
 
 namespace ServiceOrder.Data
@@ -37,6 +38,16 @@ namespace ServiceOrder.Data
                 .HasConversion<string>()
                 .HasMaxLength(20)
                 .HasDefaultValue(ServiceOrderStatus.Pending)
+                .IsRequired();
+            modelBuilder.Entity<ServiceOrders>()
+                .Property(so => so.Department)
+                .HasConversion<string>()
+                .HasMaxLength(20)
+                .IsRequired();
+            modelBuilder.Entity<ServiceOrders>()
+                .Property(so => so.Type)
+                .HasConversion<string>()
+                .HasMaxLength(20)
                 .IsRequired();
 
             modelBuilder.Entity<Client>().ToTable("Clients");

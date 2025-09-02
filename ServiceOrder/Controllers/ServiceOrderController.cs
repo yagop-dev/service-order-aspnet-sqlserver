@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ServiceOrder.Data;
 using ServiceOrder.DTOs;
-using ServiceOrder.Entities;
+using ServiceOrder.Entities.ServiceOrder;
 using System.Reflection;
 
 namespace ServiceOrder.Controllers
@@ -20,7 +20,12 @@ namespace ServiceOrder.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ServiceOrders>>> GetAll([FromQuery] ServiceOrderStatus? status, [FromQuery] int? clientId, [FromQuery] string? clientName, [FromQuery] int? technicianId, [FromQuery] string? technicianName)
+        public async Task<ActionResult<IEnumerable<ServiceOrders>>> GetAll(
+            [FromQuery] ServiceOrderStatus? status, 
+            [FromQuery] int? clientId, 
+            [FromQuery] string? clientName, 
+            [FromQuery] int? technicianId, 
+            [FromQuery] string? technicianName)
         {
             var query = _db.ServiceOrders.AsNoTracking().Include(so => so.Client).Include(so => so.Technician).AsQueryable();
 
@@ -36,8 +41,12 @@ namespace ServiceOrder.Controllers
             var dto = so.Select(so => new ServiceOrderReadDto
             {
                 Id = so.Id,
+                Department = so.Department,
+                Type = so.Type,
                 Title = so.Title,
+                Subject = so.Subject,
                 Description = so.Description,
+                FilePath = so.FilePath,
                 Status = so.Status,
                 CreatedDate = so.CreatedDate,
                 Client = new ClientDto { Id = so.Client.Id, Name = so.Client.Name },
@@ -59,8 +68,12 @@ namespace ServiceOrder.Controllers
             var dto = new ServiceOrderReadDto
             {
                 Id = so.Id,
+                Department = so.Department,
+                Type = so.Type,
                 Title = so.Title,
+                Subject = so.Subject,
                 Description = so.Description,
+                FilePath = so.FilePath,
                 Status = so.Status,
                 CreatedDate = so.CreatedDate,
                 Client = new ClientDto { Id = so.Client.Id, Name = so.Client.Name },
@@ -92,15 +105,54 @@ namespace ServiceOrder.Controllers
             {
                 ClientId = dto.ClientId,
                 TechnicianId = dto.TechnicianId,
+                Department = dto.Department,
+                Type = dto.Type,
                 Title = dto.Title,
+                Subject = dto.Subject,
                 Description = dto.Description,
                 CreatedDate = DateTime.UtcNow,
-                Status = dto.Status ?? ServiceOrderStatus.Pending
             };
             _db.ServiceOrders.Add(so);
             await _db.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = so.Id }, so);
         }
+
+        [HttpPost("create")]
+        public async Task<ActionResult<ServiceOrders>> CreateOrder([FromForm] ServiceOrderCreateDto dto)
+        {
+            string? filePath = null;
+
+            if (dto.FilePath != null && dto.FilePath.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(dto.FilePath.FileName);
+                filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await dto.FilePath.CopyToAsync(stream);
+                }
+            }
+
+            var order = new ServiceOrders()
+            {
+                Department = dto.Department,
+                Type = dto.Type,
+                Title = dto.Title,
+                Subject = dto.Subject,
+                Description = dto.Description,
+                FilePath = filePath,
+            };
+
+            _db.ServiceOrders.Add(order);
+            await _db.SaveChangesAsync();
+            return Ok(order);
+        }
+
 
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] ServiceOrderUpdateDto dto)

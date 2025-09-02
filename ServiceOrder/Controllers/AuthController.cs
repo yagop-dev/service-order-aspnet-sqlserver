@@ -17,9 +17,9 @@ namespace ServiceOrder.Controllers
             _db = db;
         }
 
-
-        [HttpPost("register")]
-        public async Task<ActionResult<ClientRegisterResponse>> Register([FromBody] ClientCreateDto registerRequest)
+        #region Client register
+        [HttpPost("client-register")]
+        public async Task<ActionResult<ClientRegisterResponse>> ClientRegister([FromBody] ClientCreateDto registerRequest)
         {
             if (!ModelState.IsValid)
             {
@@ -41,7 +41,7 @@ namespace ServiceOrder.Controllers
 
             _db.Clients.Add(client);
             await _db.SaveChangesAsync();
-            return CreatedAtAction(nameof(Register), new { id = client.Id }, new ClientRegisterResponse
+            return CreatedAtAction(nameof(ClientRegister), new { id = client.Id }, new ClientRegisterResponse
             {
                 Id = client.Id,
                 Name = client.Name,
@@ -49,33 +49,11 @@ namespace ServiceOrder.Controllers
                 Email = client.Email
             });
         }
+        #endregion
 
-
-        public class ClientRegisterResponse()
-        {
-            public int Id { get; set; }
-            public string Name { get; set; } = "";
-            public string? Telephone { get; set; }
-            public string? Email { get; set; }
-        }
-
-        #region Login
-        public class LoginRequest()
-        {
-            public string Email { get; set; } = "";
-        }
-
-        public class ClientLoginResponse()
-        {
-            public int Id { get; set; }
-            public string Name { get; set; } = "";
-            public string? Telephone { get; set; }
-            public string? Email { get; set; }
-        }
-    
-
-        [HttpPost("login")]
-        public async Task<ActionResult<ClientLoginResponse>> Login([FromBody] LoginRequest loginRequest)
+        #region Client Login
+        [HttpPost("client-login")]
+        public async Task<ActionResult<ClientLoginResponse>> ClientLogin([FromBody] LoginRequest loginRequest)
         {
             if (string.IsNullOrWhiteSpace(loginRequest.Email))
             {
@@ -102,5 +80,38 @@ namespace ServiceOrder.Controllers
 
         #endregion
 
+
+        [HttpPost("technician-register")]
+        public async Task<ActionResult<TechnicianRegisterResponse>> TechnicianRegister([FromBody] TechnicianCreateDto registerRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var exists = await _db.Technicians.AnyAsync(t => t.Email == registerRequest.Email || t.Registration == registerRequest.Registration);
+            if (exists)
+            {
+                return Conflict(new { message = "E-mail/Registration " +
+                    "already registered." });
+            }
+
+            var technician = new Technician
+            {
+                Name = registerRequest.Name.Trim(),
+                Email = registerRequest.Email.Trim(),
+                Registration = registerRequest.Registration
+            };
+
+            _db.Technicians.Add(technician);
+            await _db.SaveChangesAsync();
+            return CreatedAtAction(nameof(TechnicianRegister), new { id = technician.Id }, new TechnicianRegisterResponse()
+            {
+                Id = technician.Id,
+                Name = technician.Name,
+                Email = technician.Email,
+                Registration = technician.Registration
+            });
+        }
     }
 }
