@@ -35,7 +35,9 @@ namespace ServiceOrder.Controllers
         {
             var technician = new Technician
             {
-                Name = dto.Name
+                Name = dto.Name,
+                Email = dto.Email,
+                Registration = dto.Registration
             };
 
             _db.Technicians.Add(technician);
@@ -44,14 +46,16 @@ namespace ServiceOrder.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, [FromBody] TechnicianCreateDto dto)
+        public async Task<IActionResult> Update(int id, [FromBody] TechnicianUpdateDto dto)
         {
             var technician = await _db.Technicians.FindAsync(id);
             if(technician is null)
             {
                 return NotFound();
             }
-            technician.Name = dto.Name;
+            technician.Name = !string.IsNullOrWhiteSpace(dto.Name) ? dto.Name : technician.Name;
+            technician.Email = !string.IsNullOrWhiteSpace(dto.Email) ? dto.Email : technician.Email;
+            technician.Registration = dto.Registration.HasValue ? dto.Registration.Value : technician.Registration;
             await _db.SaveChangesAsync();
             return Ok(technician);
         }

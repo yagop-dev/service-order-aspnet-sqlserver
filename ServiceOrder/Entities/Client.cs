@@ -1,4 +1,6 @@
-﻿namespace ServiceOrder.Entities
+﻿using ServiceOrder.Entities.ServiceOrder;
+
+namespace ServiceOrder.Entities
 {
     public class Client
     {
