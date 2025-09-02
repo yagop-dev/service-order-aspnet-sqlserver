@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
   styleUrl: './so-aside-layout.css'
 })
 export class SoAsideLayout {
-  orderName = "Limpeza e manutenção preventiva de notebook"
-  orderDescription = this.orderName + "\nSubstituição de HD por SSD de 480GB em notebook Dell Inspiron."
+  orderName = "Notebook cleaning and preventive maintenance"
+  orderDescription = this.orderName + "\nReplacing HD with 480GB SSD in Dell Inspiron notebook."
   
   constructor(private router: Router){}
 

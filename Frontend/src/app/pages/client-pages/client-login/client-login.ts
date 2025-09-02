@@ -34,7 +34,7 @@ export class ClientLogin {
       this.errorMsg = 'E-mail required.';
       return;
     }
-    this.auth.login(this.email).subscribe({
+    this.auth.clientLogin(this.email).subscribe({
       next: (client) => {
         this.router.navigate(['client-profile', client.id]);
       },

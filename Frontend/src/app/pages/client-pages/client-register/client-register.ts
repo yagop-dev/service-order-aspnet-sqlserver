@@ -44,7 +44,7 @@ export class ClientRegister implements OnInit{
     
     const {name,telephone,email} = this.registerForm.value;
 
-    this.auth.register(name!, telephone!, email!).subscribe({
+    this.auth.clientRegister(name!, telephone!, email!).subscribe({
       next: (res) =>{
         this.successMsg = `User ${res.name} registered successfully!`;
         this.registerForm.reset();

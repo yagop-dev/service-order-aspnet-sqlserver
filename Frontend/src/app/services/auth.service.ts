@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import { Client } from "../models/client.model";
+import { Technician } from "../models/technician.model";
 
 @Injectable({
     providedIn: 'root'
@@ -13,14 +14,16 @@ export class AuthService{
 
     constructor(private http: HttpClient){}
 
-    register(name:string, telephone:string, email:string): Observable<Client>{
-        return this.http.post<Client>(`${this.apiUrl}/register`,{name,telephone,email})
+    //#region client register
+    clientRegister(name:string, telephone:string, email:string): Observable<Client>{
+        return this.http.post<Client>(`${this.apiUrl}/client-register`,{name,telephone,email})
     }
+    //#endregion
 
-    //#region login
+    //#region client login
 
-    login(email: string): Observable<Client>{
-        return this.http.post<Client>(`${this.apiUrl}/login`,{email}).pipe(
+    clientLogin(email: string): Observable<Client>{
+        return this.http.post<Client>(`${this.apiUrl}/client-login`,{email}).pipe(
             tap(client => localStorage.setItem('client', JSON.stringify(client)))
         );
     }
@@ -35,4 +38,9 @@ export class AuthService{
     }
 
     //#endregion
+
+    technicianRegister(name:string, email:string, registration:number): Observable<Technician>{
+        return this.http.post<Technician>(`${this.apiUrl}/technician-register`, {name, email, registration})
+    }
+    
 }
